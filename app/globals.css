@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Brand colours ── */
+  --color-void:     #14101F;
+  --color-plum:     #241933;
+  --color-plum2:    #2E2043;
+  --color-gold:     #FFB627;
+  --color-gold-dim: #B8860F;
+  --color-magenta:  #FF3D82;
+  --color-cyan:     #33E6CC;
+  --color-ink:      #EDEAF5;
+  --color-ink-dim:  #ABA3C4;
+  --color-line:     #3A2E52;
+
+  /* ── Font families ── */
+  --font-display: "Unbounded", system-ui, sans-serif;
+  --font-body:    "Manrope", system-ui, sans-serif;
+  --font-mono:    "Space Mono", ui-monospace, monospace;
+
+  /* ── Radius ── */
+  --radius-card: 14px;
+
+  /* ── Max width token ── */
+  --max-width-site: 1180px;
+}
+
+/* ─── Base ─────────────────────────────────────────────── */
+html { scroll-behavior: smooth; }
+
+/* ─── Scroll reveal (sections fade/slide in on scroll) ─── */
+html.scroll-reveal-ready main section {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html.scroll-reveal-ready main section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+main section[id] {
+  scroll-margin-top: 80px;
+}
+
+body {
+  background-color: #14101F;
+  color: #EDEAF5;
+  font-family: "Manrope", system-ui, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+a { text-decoration: none; }
+
+/* ─── Site wrapper / container ───────────────────────────── */
+.site-container {
+  width: 100%;
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration:        0.001ms !important;
+    animation-iteration-count: 1       !important;
+    transition-duration:       0.001ms !important;
+    scroll-behavior:           auto    !important;
+  }
+
+  html.scroll-reveal-ready main section {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ─── Keyframes ─────────────────────────────────────────── */
+@keyframes pulse {
+  0%,100% { transform: scaleY(0.3); }
+  50%      { transform: scaleY(1); }
+}
+
+@keyframes scroll-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ─── Readout badge ──────────────────────────────────────── */
+.readout {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Space Mono", ui-monospace, monospace;
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #33E6CC;
+  background: rgba(51,230,204,0.08);
+  border: 1px solid rgba(51,230,204,0.35);
+  border-radius: 4px;
+  padding: 5px 10px 4px;
+  line-height: 1;
+}
+.readout::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #33E6CC;
+  box-shadow: 0 0 6px #33E6CC;
+  flex-shrink: 0;
+}
+
+/* ─── Waveform bars ──────────────────────────────────────── */
+.waveform-bar {
+  flex: 1;
+  background: linear-gradient(180deg, #FFB627, #FF3D82);
+  border-radius: 2px;
+  animation: pulse 1.4s ease-in-out infinite;
+  transform-origin: bottom;
+}
+.waveform-bar:nth-child(2n)  { animation-delay: -0.3s; }
+.waveform-bar:nth-child(3n)  { animation-delay: -0.6s; }
+.waveform-bar:nth-child(4n)  { animation-delay: -0.9s; }
+.waveform-bar:nth-child(5n)  { animation-delay: -1.1s; }
+
+/* ─── Ticker ─────────────────────────────────────────────── */
+.ticker-track {
+  display: inline-flex;
+  font-family: "Space Mono", ui-monospace, monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: #ABA3C4;
+  padding: 10px 0;
+  animation: scroll-left 26s linear infinite;
+  white-space: nowrap;
+}
+
+/* ─── Progress bar fill ──────────────────────────────────── */
+.bar-fill {
+  background: linear-gradient(90deg, #FF3D82, #FFB627);
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+/* ─── FAQ accordion ──────────────────────────────────────── */
+details.faq-item summary::-webkit-details-marker { display: none; }
+details.faq-item summary { list-style: none; }
+
+/* ─── Skip link ──────────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: #FFB627;
+  color: #1A1206;
+  padding: 10px 16px;
+  z-index: 100;
+}
+.skip-link:focus { left: 10px; top: 10px; }
+
+/* ─── Jog wheel spin ─────────────────────────────────────── */
+.jog-spin {
+  animation: spin-slow 4s linear infinite;
+}
